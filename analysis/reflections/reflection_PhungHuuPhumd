@@ -1,4 +1,4 @@
-# Individual Reflection - [Your Name]
+# Individual Reflection - [Phung Huu Phu - 2A202600283]
 
 ## 1) My technical contributions
 - I implemented an end-to-end evaluation pipeline: dataset generation, async benchmark runner, retrieval metrics, multi-judge scoring, and regression gate.
