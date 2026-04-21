@@ -8,6 +8,8 @@
 ## 2) Key concepts I learned
 - **MRR (Mean Reciprocal Rank):** Measures how early the first relevant retrieved document appears; high MRR means retrieval ordering is strong.
 - **Agreement Rate:** Measures consistency between two judges; high agreement increases confidence in evaluation stability.
+- **Cohen's Kappa:** Measures inter-rater reliability while correcting for chance agreement. This is stronger than raw agreement rate when class distribution is imbalanced.
+- **Position Bias:** A judge may prefer the first answer option simply due to order, not quality. This can be mitigated by swapping response order and averaging scores.
 - **Regression Release Gate:** Converts metric deltas (quality/retrieval/latency) into a clear approve/block decision.
 - **Cost vs quality trade-off:** Online judges improve score quality but increase latency and API cost; hybrid mode balances both.
 
@@ -23,6 +25,8 @@
 - Add semantic reranking to improve relevancy for paraphrase and ambiguous questions.
 - Add adaptive judge policy (skip second judge for high-confidence cases) to reduce cost.
 - Add caching for repeated judge prompts and expand monitoring with P95 latency and cost-per-case.
+- Add Cohen's Kappa tracking per run and monitor judge drift over time.
+- Add position-bias check by A/B answer order swap for a sampled subset of benchmark cases.
 
 ## 5) Final results from my run
 - Total cases: 50
