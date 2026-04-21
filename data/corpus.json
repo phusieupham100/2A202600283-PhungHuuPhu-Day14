@@ -1,0 +1,52 @@
+[
+  {
+    "id": "D01",
+    "title": "Password Reset Policy",
+    "content": "Users can reset account passwords from Settings > Security. Two-factor verification is required before password update."
+  },
+  {
+    "id": "D02",
+    "title": "Billing Refund Window",
+    "content": "Eligible subscriptions are refundable within 14 days if usage is below 30 percent. Refund requests are submitted via the billing portal."
+  },
+  {
+    "id": "D03",
+    "title": "Incident Escalation",
+    "content": "P1 incidents require immediate page to on-call engineer and incident manager. Postmortem draft is expected within 24 hours."
+  },
+  {
+    "id": "D04",
+    "title": "Data Retention",
+    "content": "Audit logs are retained for 180 days. Customer chat transcripts are retained for 30 days unless legal hold applies."
+  },
+  {
+    "id": "D05",
+    "title": "API Rate Limit",
+    "content": "Standard API plans are limited to 120 requests per minute. Burst traffic above this threshold returns HTTP 429."
+  },
+  {
+    "id": "D06",
+    "title": "Model Routing Strategy",
+    "content": "Short FAQ requests use a smaller model for cost efficiency. Complex reasoning routes to a high-capability model."
+  },
+  {
+    "id": "D07",
+    "title": "Security Access Review",
+    "content": "Privileged access must be reviewed quarterly. Inactive admin accounts older than 30 days must be disabled."
+  },
+  {
+    "id": "D08",
+    "title": "Deployment Rollback Rule",
+    "content": "A release must be rolled back when error rate exceeds 5 percent for 10 minutes. Rollback decision must be logged in incident timeline."
+  },
+  {
+    "id": "D09",
+    "title": "Knowledge Base Ownership",
+    "content": "Each knowledge article has a domain owner responsible for monthly review. Stale articles are flagged after 35 days without updates."
+  },
+  {
+    "id": "D10",
+    "title": "Support SLA",
+    "content": "First response SLA is 15 minutes for priority tickets and 4 hours for standard tickets. SLA breaches are reviewed in weekly operations meeting."
+  }
+]

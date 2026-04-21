@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "version": "Agent_V2_Optimized",
+    "run_mode": "online",
+    "total": 50,
+    "timestamp": "2026-04-21 16:34:14"
+  },
+  "metrics": {
+    "avg_score": 4.91,
+    "hit_rate": 0.96,
+    "mrr": 0.95,
+    "agreement_rate": 0.955,
+    "faithfulness": 0.8154,
+    "relevancy": 0.5811,
+    "avg_latency_s": 1.2238,
+    "pass_rate": 1.0,
+    "total_estimated_cost_usd": 0.014448
+  },
+  "regression": {
+    "baseline": "Agent_V1_Base",
+    "candidate": "Agent_V2_Optimized",
+    "result": {
+      "decision": "APPROVE",
+      "delta_avg_score": 1.4172,
+      "delta_hit_rate": 0.0,
+      "delta_latency_s": 1.1627
+    }
+  }
+}

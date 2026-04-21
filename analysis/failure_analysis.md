@@ -2,30 +2,40 @@
 
 ## 1. Tổng quan Benchmark
 - **Tổng số cases:** 50
-- **Tỉ lệ Pass/Fail:** X/Y
+- **Chế độ chạy:** online
+- **Tỉ lệ Pass/Fail:** 50/0
 - **Điểm RAGAS trung bình:**
-    - Faithfulness: 0.XX
-    - Relevancy: 0.XX
-- **Điểm LLM-Judge trung bình:** X.X / 5.0
+    - Faithfulness: 0.82
+    - Relevancy: 0.58
+- **Điểm LLM-Judge trung bình:** 4.91 / 5.0
 
 ## 2. Phân nhóm lỗi (Failure Clustering)
 | Nhóm lỗi | Số lượng | Nguyên nhân dự kiến |
 |----------|----------|---------------------|
-| Hallucination | 5 | Retriever lấy sai context |
-| Incomplete | 3 | Prompt quá ngắn, không yêu cầu chi tiết |
-| Tone Mismatch | 2 | Agent trả lời quá suồng sã |
+| Hallucination | 0 | Retriever lấy thiếu context hoặc context không đủ rõ |
+| Incomplete | 0 | Agent từ chối trả lời hoặc thiếu thông tin chi tiết |
+| Tone Mismatch | 0 | Câu trả lời chưa đúng mức độ chuyên nghiệp mong muốn |
 
-## 3. Phân tích 5 Whys (Chọn 3 case tệ nhất)
+## 3. Phân tích 5 Whys (Risk-based, vì không có fail case)
+### Case #1: Relevancy vẫn thấp hơn kỳ vọng (0.58)
+1. **Symptom:** Một số câu trả lời đúng thông tin nhưng chưa bám sát ý hỏi.
+2. **Why 1:** Agent ưu tiên tổng hợp context, đôi khi thêm thông tin phụ.
+3. **Why 2:** Prompt chưa ép định dạng "trả lời trực tiếp theo intent trước".
+4. **Why 3:** Retrieval hiện dựa nhiều vào token overlap và synonym map đơn giản.
+5. **Why 4:** Chưa có semantic reranker sau top-k ban đầu.
+6. **Root Cause:** Chất lượng retrieval + answer-format control chưa tối ưu cho câu hỏi paraphrase/ambiguous.
 
-### Case #1: [Mô tả ngắn]
-1. **Symptom:** Agent trả lời sai về...
-2. **Why 1:** LLM không thấy thông tin trong context.
-3. **Why 2:** Vector DB không tìm thấy tài liệu liên quan nhất.
-4. **Why 3:** Chunking size quá lớn làm loãng thông tin quan trọng.
-5. **Why 4:** ...
-6. **Root Cause:** Chiến lược Chunking không phù hợp với dữ liệu bảng biểu.
+### Case #2: Latency online tăng đáng kể so với baseline
+1. **Symptom:** Delta latency +1.16s khi bật online judge/agent.
+2. **Why 1:** Candidate mode gọi OpenAI cho generation và 2 judge models.
+3. **Why 2:** Mỗi case có nhiều network round-trips.
+4. **Why 3:** Chưa có cache cho các prompt judge trùng pattern.
+5. **Why 4:** Chưa có cơ chế adaptive judge (chỉ gọi judge thứ 2 khi score biên).
+6. **Root Cause:** Thiết kế ưu tiên quality trước cost/latency.
 
 ## 4. Kế hoạch cải tiến (Action Plan)
-- [ ] Thay đổi Chunking strategy từ Fixed-size sang Semantic Chunking.
-- [ ] Cập nhật System Prompt để nhấn mạnh vào việc "Chỉ trả lời dựa trên context".
-- [ ] Thêm bước Reranking vào Pipeline.
+- [ ] Thêm semantic reranker sau retrieval ban đầu để tăng relevancy trên câu hỏi paraphrase.
+- [ ] Bổ sung answer template theo thứ tự: direct answer -> evidence -> caveat.
+- [ ] Chạy adaptive judging: nếu judge A >= 4.7 thì bỏ qua judge B để giảm chi phí.
+- [ ] Caching kết quả judge cho các case trùng cấu trúc prompt.
+- [ ] Theo dõi thêm P95 latency và cost/case ở release gate.
